@@ -7,8 +7,8 @@ wss.on("connection", function connection(ws, req) {
   ws.on("message", function incoming(data) {
     console.log(req.connection.remoteAddress + " send: " + data);
     wss.clients.forEach(function each(client) {
-      if (client !== ws && client.readyState === WebSocket.OPEN) {
-        client.send(data);
+      if (client.readyState === WebSocket.OPEN) {
+        client.send(req.connection.remoteAddress + ": " + data);
       }
     });
   });
